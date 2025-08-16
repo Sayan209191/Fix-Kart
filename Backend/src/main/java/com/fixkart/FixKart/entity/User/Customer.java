@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import com.fixkart.FixKart.entity.Address.Address;
 
 @Entity
-@Table(name = "mst_customers")
+@Table(name = "t_customers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -5,9 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fixkart.FixKart.entity.Address.Address;
+import com.fixkart.FixKart.entity.TechnicalCategory.TechnicalCategory;
 
 @Entity
-@Table(name = "mst_technician")
+@Table(name = "t_technician")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,8 +37,11 @@ public class Technician {
     @Column(nullable = true, unique = true)
     private String emailId;
     @OneToOne
-    @JoinColumn(name = "mst_address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_customer_address"))
+    @JoinColumn(name = "mst_address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_address"))
     private Address address;
+    @OneToOne
+    @JoinColumn(name = "mst_category_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_category"))
+    private TechnicalCategory category;
 
 
 

@@ -40,6 +40,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String signup(String mobileNumber, String password, int userCategory, String otp) {
         try {
+            if(!(mobileNumber.length() == 10)) {
+                return "Invalid Mobile Number";
+            }
             if (!otpStore.containsKey(mobileNumber) || !otpStore.get(mobileNumber).equals(otp)) {
                 return "Invalid or expired OTP";
             }

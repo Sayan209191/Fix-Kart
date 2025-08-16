@@ -26,6 +26,4 @@ public class Address {
     private String State;
     @Column(nullable = false)
     private String landmark;
-
-
 }
