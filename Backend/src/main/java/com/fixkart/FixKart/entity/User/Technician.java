@@ -1,9 +1,7 @@
 package com.fixkart.FixKart.entity.User;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import com.fixkart.FixKart.entity.Address.Address;
 import com.fixkart.FixKart.entity.TechnicalCategory.TechnicalCategory;
 
@@ -13,11 +11,13 @@ import com.fixkart.FixKart.entity.TechnicalCategory.TechnicalCategory;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Technician {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "mst_user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_customer_user"))
+
+    @OneToOne
+    @JoinColumn(name = "mst_user_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_user"))
     private Users user;
 
     @Column(nullable = true)
@@ -29,20 +29,20 @@ public class Technician {
     @Column(nullable = true)
     private String lastName;
 
-    @Column(nullable = false, unique = true)
-    private Long mobileNumber;
-    @Column(nullable = false)
+//    @Column(nullable = false, unique = true)
+//    private Long mobileNumber;
+
+    @Column(nullable = true)
     private Long alternativeMobileNumber;
 
-    @Column(nullable = true, unique = true)
+    @Column(nullable = false, unique = true)
     private String emailId;
+
     @OneToOne
     @JoinColumn(name = "mst_address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_address"))
     private Address address;
-    @OneToOne
+
+    @ManyToOne
     @JoinColumn(name = "mst_category_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_category"))
     private TechnicalCategory category;
-
-
-
 }

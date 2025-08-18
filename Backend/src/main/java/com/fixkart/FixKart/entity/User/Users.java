@@ -1,22 +1,25 @@
 package com.fixkart.FixKart.entity.User;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "mst_user")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
-    private String username;
+
+    @Column(name = "mobile_number", nullable = false, unique = true)
+    private String mobileNumber;
+
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private Integer userCategory; // 1=Admin, 2=Customer, 3=Technician
 
-    public void setUserCategory(int userCategory) {
-        this.userCategory = userCategory;
-    }
+    @ManyToOne(fetch = FetchType.EAGER)   // many users → one role
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 }

@@ -13,22 +13,5 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/send-otp")
-    public String sendOtp(@RequestParam String mobileNumber) {
-        return userService.sendOtp(mobileNumber);
-    }
 
-    @PostMapping("/signup")
-    public String signup(@RequestParam String mobileNumber,
-                         @RequestParam String password,
-                         @RequestParam int userCategory,
-                         @RequestParam String otp) {
-        return userService.signup(mobileNumber, password, userCategory, otp);
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String mobileNumber,
-                        @RequestParam String otp) {
-        return userService.login(mobileNumber, otp);
-    }
 }
