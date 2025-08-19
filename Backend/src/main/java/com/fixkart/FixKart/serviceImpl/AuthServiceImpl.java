@@ -35,7 +35,7 @@ public class AuthServiceImpl implements AuthService {
 
 
             Role selectedRole = roleRepository.findById(roleId)
-                    .orElseThrow(() -> new RuntimeException("Role not found with id: " + roleId));
+                    .orElseThrow(() -> new RuntimeException("Role not found with id: " + roleId)); // Change it to custom extension
 
             Users newUser = Users.builder()
                     .mobileNumber(mobileNumber)

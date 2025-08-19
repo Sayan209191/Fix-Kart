@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
     Optional<Users> findByMobileNumber(String mobileNumber);
+    boolean existsByMobileNumber(String mobileNumber);
 }

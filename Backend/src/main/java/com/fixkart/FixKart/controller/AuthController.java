@@ -24,4 +24,10 @@ public class AuthController {
     public String signin(@RequestBody LoginRequest request) {
         return authService.signin(request.getMobileNumber(), request.getPassword());
     }
+
+    // Logout (optional for JWT, usually handled client-side by deleting token)
+    @PostMapping("/logout")
+    public String logout() {
+        return "Logout successful...\n";
+    }
 }
