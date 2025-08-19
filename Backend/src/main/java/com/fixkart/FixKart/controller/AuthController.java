@@ -17,7 +17,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public String signup(@RequestBody AuthRequest request) {
-        return authService.signup(request.getMobileNumber(), request.getPassword(), request.getRoleId());
+        return authService.signup(request.getMobileNumber(), request.getPassword(), request.getConfirmPassword(), request.getRoleId());
     }
 
     @PostMapping("/signin")

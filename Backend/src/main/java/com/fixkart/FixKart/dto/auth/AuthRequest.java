@@ -8,5 +8,6 @@ import lombok.Data;
 public class AuthRequest {
     private String mobileNumber;
     private String password;
+    private String confirmPassword;
     private Long roleId;
 }
