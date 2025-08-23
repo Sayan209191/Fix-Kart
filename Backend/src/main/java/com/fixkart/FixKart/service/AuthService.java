@@ -1,7 +1,10 @@
 package com.fixkart.FixKart.service;
 
 
+import com.fixkart.FixKart.dto.auth.LoginResponse;
+import com.fixkart.FixKart.dto.auth.SignupResponse;
+
 public interface AuthService {
-    String signup(String mobileNumber, String password, String confirmPassWord, long role);
-    String signin(String mobileNumber, String password);
+    SignupResponse signup(String mobileNumber, String password, String confirmPassWord, long role);
+    LoginResponse signin(String mobileNumber, String password);
 }

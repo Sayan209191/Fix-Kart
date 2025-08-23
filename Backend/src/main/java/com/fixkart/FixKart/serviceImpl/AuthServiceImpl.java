@@ -1,83 +1,79 @@
 package com.fixkart.FixKart.serviceImpl;
 
+import com.fixkart.FixKart.dto.auth.LoginResponse;
+import com.fixkart.FixKart.dto.auth.SignupResponse;
 import com.fixkart.FixKart.entity.User.Role;
 import com.fixkart.FixKart.entity.User.Users;
-import com.fixkart.FixKart.exception.InvalidArgumentException;
 import com.fixkart.FixKart.repository.RoleRepository;
 import com.fixkart.FixKart.repository.UserRepository;
+import com.fixkart.FixKart.security.JwtUtil;
 import com.fixkart.FixKart.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
 
-    public AuthServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Override
+    public SignupResponse signup(String mobileNumber, String password, String confirmPassword, long roleId) {
+        if (!password.equals(confirmPassword)) {
+            return new SignupResponse("Passwords do not match", false);
+        }
+
+        if (userRepository.findByMobileNumber(mobileNumber).isPresent()) {
+            return new SignupResponse("User already exists", false);
+        }
+
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new RuntimeException("Invalid role id"));
+
+        Users user = new Users();
+        user.setMobileNumber(mobileNumber);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setRole(role);
+
+        userRepository.save(user);
+
+        return new SignupResponse("Signup successful", true);
     }
 
     @Override
-    public String signup(String mobileNumber, String password, String confirmPassword, long roleId) {
+    public LoginResponse signin(String mobileNumber, String password) {
         try {
-            if (mobileNumber == null || mobileNumber.isEmpty()) {
-                throw new InvalidArgumentException("Mobile number must not be empty.");
-            }
-            if(!mobileNumber.matches("\\d{10}")) {
-                throw new InvalidArgumentException("Invalid mobile number. Must be exactly 10 digits.");
-            }
-            // Check Password and Confirm PassWord are matched or not
+            Users user = userRepository.findByMobileNumber(mobileNumber)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
 
-            // Change according to new Exception -> Useralready Exist
-            if (userRepository.findByMobileNumber(mobileNumber).isPresent()) {
-                return "User already exists with mobile number: " + mobileNumber;
+            if (!passwordEncoder.matches(password, user.getPassword())) {
+                return new LoginResponse("Invalid credentials", false, null);
             }
 
-            try{
-                Role selectedRole = roleRepository.findById(roleId)
-                    .orElseThrow(() -> new RuntimeException("Role not found with id: " + roleId));
-                Users newUser = Users.builder()
-                        .mobileNumber(mobileNumber)
-                        .password(passwordEncoder.encode(password))
-                        .role(selectedRole)
-                        .build();
+            String token = jwtUtil.generateToken(mobileNumber);
 
-                userRepository.save(newUser);
-                return "User registered successfully with mobile number: " + mobileNumber;
-            }
-            catch (Exception ex) {
-                throw new RuntimeException("Signup failed: " + ex.getMessage(), ex);
+            return new LoginResponse("Login successful", true, token);
 
-            }
-
-        } catch (Exception ex) {
-            throw new RuntimeException("Signup failed: " + ex.getMessage(), ex);
+        } catch (BadCredentialsException e) {
+            return new LoginResponse(null, false, "Invalid credentials");
+        } catch (Exception e) {
+            return new LoginResponse(null, false, "Login failed: " + e.getMessage());
         }
-    }
-    @Override
-    public String signin(String mobileNumber, String password) {
-        // use try catch block
-        // Check Mobile Number is valid or not according to exception
-
-        Users user = userRepository.findByMobileNumber(mobileNumber)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // Change To Invalid Creaditial exception
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            return "Invalid credentials";
-        }
-
-        // later replace with JWT token
-        return "Login successful for: " + mobileNumber;
     }
 }

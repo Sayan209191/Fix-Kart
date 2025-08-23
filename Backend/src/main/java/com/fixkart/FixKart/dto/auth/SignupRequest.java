@@ -6,5 +6,6 @@ import lombok.Data;
 public class SignupRequest {
     private String mobileNumber;
     private String password;
-    private long roleId;   // can be "USER", "ADMIN", etc.
+    private String confirmPassword;
+    private long roleId;   // can be "USER", "ADMIN", "TECHNICIAN".
 }
