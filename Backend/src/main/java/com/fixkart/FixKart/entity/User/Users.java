@@ -2,6 +2,8 @@ package com.fixkart.FixKart.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "mst_user")
 @Data
@@ -22,4 +24,6 @@ public class Users {
     @ManyToOne(fetch = FetchType.EAGER)   // many users → one role
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+    @Column(nullable = false)
+    private LocalDateTime transDatetime = LocalDateTime.now();
 }

@@ -9,4 +9,5 @@ public class LoginResponse {
     private String message;
     private boolean success;
     private String token;  // JWT Token
+    private Object user;
 }

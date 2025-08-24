@@ -35,7 +35,7 @@ public class Customer {
     @Column(nullable = true)
     private Long alternativeMobileNumber;
 
-    @Column(nullable = false, unique = true) // email should be mandatory
+    @Column(nullable = true, unique = true) // email should be mandatory
     private String emailId;
 
     @OneToOne

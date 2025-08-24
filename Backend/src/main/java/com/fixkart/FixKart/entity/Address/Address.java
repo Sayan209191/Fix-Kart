@@ -14,16 +14,16 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String addressLine1;
     @Column(nullable = true)
     private String addressLine2;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Long pincode;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String city;
-    @Column(nullable = false)
-    private String State;
-    @Column(nullable = false)
+    @Column(nullable = true)
+    private String state;
+    @Column(nullable = true)
     private String landmark;
 }
