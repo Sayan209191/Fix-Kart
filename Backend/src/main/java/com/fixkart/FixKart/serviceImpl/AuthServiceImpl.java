@@ -7,9 +7,13 @@ import com.fixkart.FixKart.entity.User.Customer;
 import com.fixkart.FixKart.entity.User.Role;
 import com.fixkart.FixKart.entity.User.Technician;
 import com.fixkart.FixKart.entity.User.Users;
+import com.fixkart.FixKart.exception.InvalidArgumentException;
+import com.fixkart.FixKart.exception.InvalidCredentialsException;
 import com.fixkart.FixKart.repository.*;
 import com.fixkart.FixKart.security.JwtUtil;
-import com.fixkart.FixKart.service.AuthService;
+import com.fixkart.FixKart.service.*;
+//import com.fixkart.FixKart.service.TokenBlacklistService;
+import com.fixkart.FixKart.util.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,11 +50,21 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    private final TokenBlacklistService blacklistService;
+    private final PasswordUtil passwordUtil;
+
+
+
     @Override
     public SignupResponse signup(String mobileNumber, String password, String confirmPassword, long roleId) {
         try {
             if (!password.equals(confirmPassword)) {
-                return new SignupResponse("Passwords do not match", false);
+                throw  new InvalidCredentialsException("Passwords do not match");
+//                return new SignupResponse("Passwords do not match", false);
+            }
+            // check PassWord match with password policy
+            if(!passwordUtil.isValidFormat(password)) {
+                throw new InvalidArgumentException("Password new atleast one number , one speacial character , one Uppercase character");
             }
 
             if (userRepository.findByMobileNumber(mobileNumber).isPresent()) {
@@ -137,5 +151,17 @@ public class AuthServiceImpl implements AuthService {
             return new LoginResponse(null, false, "Login failed: " + e.getMessage(), null);
         }
     }
+    @Override
+    public String logout(String token) {
+        blacklistService.blacklistToken(token);
+        return "Logged out successfully";
+    }
+
+    @Override
+    public String editProfile(){
+        return null;
+    }
+
+
 
 }

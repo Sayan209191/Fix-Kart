@@ -31,10 +31,38 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<LoginResponse> signin(@RequestBody LoginRequest request) {
-        LoginResponse response = authService.signin(
-                request.getMobileNumber(),
-                request.getPassword()
-        );
-        return ResponseEntity.ok(response);
+        try{
+            LoginResponse response = authService.signin(
+                    request.getMobileNumber(),
+                    request.getPassword()
+            );
+            return ResponseEntity.ok(response);
+        }
+        catch (Exception ex) {
+            // Latter Implement Logger
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestHeader("Authorization") String authHeader) {
+        try{
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String token = authHeader.replace("Bearer ", "");
+                String response = authService.logout(token);
+                return ResponseEntity.ok(response);
+            }
+        }
+        catch (Exception ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        }
+
+        return ResponseEntity.badRequest().body("Invalid token");
+    }
+
+    @PostMapping("/edit-profile")
+    public ResponseEntity<String> editProfile() { // what kind of data comes have to check , then implement
+
+
+        return ResponseEntity.ok("Profile Updated Successfully");
     }
 }

@@ -7,4 +7,6 @@ import com.fixkart.FixKart.dto.auth.SignupResponse;
 public interface AuthService {
     SignupResponse signup(String mobileNumber, String password, String confirmPassWord, long role);
     LoginResponse signin(String mobileNumber, String password);
+    String logout(String token);
+    String editProfile();
 }

@@ -1,6 +1,7 @@
 package com.fixkart.FixKart.controller;
 
 import com.fixkart.FixKart.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,5 +13,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+
 
 }
