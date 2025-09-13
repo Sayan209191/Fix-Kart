@@ -1,5 +1,6 @@
 package com.fixkart.FixKart.entity.TechnicalCategory;
 
+import com.fixkart.FixKart.entity.User.Technician;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +21,9 @@ public class TechnicalCategory {
     private String subCategory;
     @Column(nullable = true)
     private String Specialization;
+
+    @OneToOne
+    @JoinColumn(name = "technician_id", referencedColumnName = "id")
+    private Technician technician;
 
 }

@@ -58,11 +58,4 @@ public class AuthController {
 
         return ResponseEntity.badRequest().body("Invalid token");
     }
-
-    @PostMapping("/edit-profile")
-    public ResponseEntity<String> editProfile() { // what kind of data comes have to check , then implement
-
-
-        return ResponseEntity.ok("Profile Updated Successfully");
-    }
 }

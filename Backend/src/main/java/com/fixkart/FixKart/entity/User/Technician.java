@@ -42,7 +42,7 @@ public class Technician {
     @JoinColumn(name = "mst_address_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_address"))
     private Address address;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "mst_category_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_technician_category"))
     private TechnicalCategory category;
 }
