@@ -1,0 +1,47 @@
+<div class="wrap">
+  <main class="card" role="main" aria-labelledby="title">
+    <div class="logo">
+      <img src="assets/Fixkart.jpg" alt="Fixcart Logo">
+    </div>
+    <h1 id="title">Log in to Fixcart</h1>
+
+    <!-- Social sign in -->
+    <div class="btns">
+      <button class="btn" type="button">
+        <img src="assets/google logo.webp" alt="Google logo" class="icon">
+        Continue with Google
+      </button>
+    </div>
+
+    <div class="sep"><hr><span>or</span><hr></div>
+
+    <!-- Sign in form -->
+    <form id="signin-form" (submit)="onSignin($event)" novalidate>
+      <div class="field">
+        <label for="email">Email or mobile number</label>
+        <input id="email" name="email" type="text" placeholder="Email or mobile number" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Password" required />
+      </div>
+
+      <div class="row">
+        <label class="remember">
+          <input type="checkbox" name="remember" checked />
+          <span>Remember me</span>
+        </label>
+        <a href="#" class="muted">Forgot your password?</a>
+      </div>
+
+      <div style="margin-top:16px">
+        <button class="submit" type="submit">Log In</button>
+      </div>
+    </form>
+
+    <footer>
+      <div>Don't have an account? <a routerLink="/signup">Sign up for Fixcart</a></div>
+    </footer>
+  </main>
+</div>
+
