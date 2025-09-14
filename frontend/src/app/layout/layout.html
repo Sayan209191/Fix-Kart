@@ -1,0 +1,126 @@
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <a routerLink="/" class="logo"><i class="fa-solid fa-cart-shopping"></i>Fixcart</a>
+
+  <nav class="navbar">
+    <a routerLink="/">Home</a>
+    <a routerLink="/services">Services</a>
+    <a routerLink="/products">Products</a>
+    <a routerLink="/categories">Categories</a>
+    <a routerLink="/review">Review</a>
+    <a routerLink="/blogs">Blogs</a>
+  </nav>
+
+  <div class="icons">
+    <div class="fas fa-bars" id="menu-btn"></div>
+    <div class="fas fa-search" id="search-btn"></div>
+    <div class="fas fa-shopping-cart" id="cart-btn"></div>
+  </div>
+
+  <form class="search-form">
+    <input type="search" id="search-box" placeholder="search here..." />
+    <label for="search-box" class="fas fa-search"></label>
+  </form>
+
+  <div class="shopping-cart">
+    <div class="box">
+      <i class="fas fa-trash"></i>
+      <img src="assets/cart-image-1.jpg" alt="" />
+      <div class="content">
+        <h3>Fan</h3>
+        <span class="price">1500/-</span>
+        <span class="quantity">qty : 1</span>
+      </div>
+    </div>
+    <div class="box">
+      <i class="fas fa-trash"></i>
+      <img src="assets/cart-image-2.jpg" alt="" />
+      <div class="content">
+        <h3>LED TV</h3>
+        <span class="price">20000/-</span>
+        <span class="quantity">qty : 1</span>
+      </div>
+    </div>
+    <div class="box">
+      <i class="fas fa-trash"></i>
+      <img src="assets/cart-img-3.webp" alt="" />
+      <div class="content">
+        <h3>Motor</h3>
+        <span class="price">3.500/-</span>
+        <span class="quantity">qty : 1</span>
+      </div>
+    </div>
+    <div class="total">total : 25000/-</div>
+    <a href="#" class="btn">checkout</a>
+  </div>
+
+  <div class="dropdown">
+  <button class="dropbtn" type="button">{{ loginButtonText }} ▼</button>
+  <div class="dropdown-content">
+    <div class="dropdown-header">
+      New customer? <a routerLink="/signup">Sign Up</a>
+    </div>
+    <a routerLink="/signin"><span class="icon">👤</span> Sign In</a>
+    <a routerLink="/profile"><span class="icon">👤</span> My Profile</a>
+    <a routerLink="/orders"><span class="icon">📦</span> My Orders</a>
+    <a routerLink="/settings"><span class="icon">⚙️</span> Settings</a>
+  </div>
+</div>
+
+</header>
+<!-- ============== END HEADER ============== -->
+
+<!-- Router outlet for all pages -->
+<main style="margin-top: 120px;">
+  <router-outlet></router-outlet>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<section class="footer">
+  <div class="box-container">
+    <div class="box">
+      <h3>Fixcart <i class="fa-solid fa-cart-shopping"></i></h3>
+      <p>
+        lorem ipsum dolor, sit amet consectetur adipisicing elit .Aliquam,
+        space
+      </p>
+      <div class="share">
+        <a href="#" class="fab fa-facebook-f"></a>
+        <a href="#" class="fab fa-twitter"></a>
+        <a href="#" class="fab fa-instagram"></a>
+        <a href="#" class="fab fa-linkedin"></a>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>contact info</h3>
+      <a href="tel:+917427945961" class="links"><i class="fas fa-phone"></i>+91-7427945961</a>
+      <a href="tel:+919593888505" class="links"><i class="fas fa-phone"></i>+91-9593888505</a>
+      <a href="mailto:chinmaykhanra@gmail.com" class="links"><i class="fas fa-envelope"></i>chinmaykhanra@gmail.com</a>
+      <a href="#" class="links"><i class="fas fa-map-marker-alt"></i>kolkata,india-700124</a>
+    </div>
+
+    <div class="box">
+      <h3>quick links</h3>
+      <a routerLink="/" class="links"><i class="fas fa-arrow-right"></i>home</a>
+      <a routerLink="/features" class="links"><i class="fas fa-arrow-right"></i>features</a>
+      <a routerLink="/products" class="links"><i class="fas fa-arrow-right"></i>products</a>
+      <a routerLink="/categories" class="links"><i class="fas fa-arrow-right"></i>categories</a>
+      <a routerLink="/review" class="links"><i class="fas fa-arrow-right"></i>review</a>
+      <a routerLink="/blogs" class="links"><i class="fas fa-arrow-right"></i>blogs</a>
+    </div>
+
+    <div class="box">
+      <h3>news letter</h3>
+      <p>subscribe for latest updates</p>
+      <div class="newsletter-box">
+        <input type="email" placeholder="Enter your email" class="email" />
+        <input type="submit" value="Subscribe" class="btn" />
+      </div>
+      <img src="assets/payment.jfif" class="payment-img" alt="" />
+    </div>
+  </div>
+
+
+</section>
+<!-- ============== END FOOTER ============== -->
