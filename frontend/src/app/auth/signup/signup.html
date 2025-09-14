@@ -1,0 +1,53 @@
+<div class="wrap">
+  <main class="card" role="main" aria-labelledby="title">
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/Fixkart.jpg" alt="Fixcart Logo">
+    </div>
+
+    <h1 id="title">Sign up to Fixcart</h1>
+
+    <!-- Sign up form -->
+    <form id="signup-form" (submit)="onSignup($event)" novalidate>
+      <div class="field">
+        <label for="email">Email address</label>
+        <input id="email" name="email" type="email" placeholder="name@domain.com" required />
+        <button type="button" id="send-code" class="btn" (click)="sendCode()">Send Verification Code</button>
+      </div>
+
+      <div class="field" *ngIf="showOtp">
+        <label for="otp">Enter Verification Code</label>
+        <input id="otp" name="otp" type="text" placeholder="Enter code sent to your email" />
+      </div>
+
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="Password" required />
+      </div>
+
+      <div class="field">
+        <label for="mobile">Mobile number</label>
+        <input id="mobile" name="mobile" type="tel" placeholder="+91 98765 43210" required />
+      </div>
+
+      <div style="margin-top:16px">
+        <button class="submit" type="submit">Sign Up</button>
+      </div>
+    </form>
+
+    <!-- Divider -->
+    <div class="sep"><hr><span>or</span><hr></div>
+
+    <!-- Social sign-up -->
+    <div class="btns">
+      <button class="btn" type="button">
+        <img src="assets/google logo.webp" alt="Google logo" class="icon"> Sign up with Google
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div>Already have an account? <a routerLink="/signin">Log in here</a></div>
+    </footer>
+  </main>
+</div>
