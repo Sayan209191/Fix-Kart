@@ -117,6 +117,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponse signin(String mobileNumber, String password) {
         try {
+            if(mobileNumber == null || password == null) {
+                return new LoginResponse("Login Failed", false, null, null);
+            }
             Users user = userRepository.findByMobileNumber(mobileNumber)
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -130,26 +133,6 @@ public class AuthServiceImpl implements AuthService {
             userData.put("id", user.getId());
             userData.put("mobileNumber", user.getMobileNumber());
             userData.put("role", user.getRole().getName());
-
-            // Attach customer/technician data if exists
-//            if ("CUSTOMER".equalsIgnoreCase(user.getRole().getName())) {
-//                Customer customer = customerRepository.findByUser(user).orElse(null);
-//                userData.put("Customer Details", customer);
-////                if(customer != null){
-////                    Address customerAddress = customer.getAddress();
-////                    userData.put("Customer Address", customerAddress);
-////                }
-//
-//
-//            } else if ("TECHNICIAN".equalsIgnoreCase(user.getRole().getName())) {
-//                Technician technician = technicianRepository.findByUser(user).orElse(null);
-//                userData.put("technicianDetails", technician);
-////                if(technician  != null) {
-////                    Address technicianAddress = technician.getAddress();
-////                    userData.put("Technician Address", technicianAddress);
-////                }
-//            }
-
             return new LoginResponse("Login successful", true, token, userData);
 
         } catch (BadCredentialsException e) {

@@ -1,13 +1,12 @@
-/* Global background */
-body {
+.signup-page {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #121212; /* dark background */
+  /* background: #121212; */
   color: #fff;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start;
+  height: 80vh;
 }
 
 /* Wrapper */
@@ -173,3 +172,4 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+

@@ -1,11 +1,11 @@
+<section class="signin-page" >
 <div class="wrap">
-  <main class="card" role="main" aria-labelledby="title">
+  <div class="card" role="main" aria-labelledby="title">
     <div class="logo">
       <img src="assets/Fixkart.jpg" alt="Fixcart Logo">
     </div>
     <h1 id="title">Log in to Fixcart</h1>
 
-    <!-- Social sign in -->
     <div class="btns">
       <button class="btn" type="button">
         <img src="assets/google logo.webp" alt="Google logo" class="icon">
@@ -15,7 +15,6 @@
 
     <div class="sep"><hr><span>or</span><hr></div>
 
-    <!-- Sign in form -->
     <form id="signin-form" (submit)="onSignin($event)" novalidate>
       <div class="field">
         <label for="email">Email or mobile number</label>
@@ -39,9 +38,9 @@
       </div>
     </form>
 
-    <footer>
-      <div>Don't have an account? <a routerLink="/signup">Sign up for Fixcart</a></div>
-    </footer>
-  </main>
+    <div class="muted">
+      Don't have an account? <a routerLink="/signup">Sign up for Fixcart</a>
+    </div>
+  </div>
 </div>
-
+</section>
