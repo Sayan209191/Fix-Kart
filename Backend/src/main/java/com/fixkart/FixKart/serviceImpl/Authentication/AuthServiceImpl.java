@@ -1,8 +1,10 @@
-package com.fixkart.FixKart.serviceImpl;
+package com.fixkart.FixKart.serviceImpl.Authentication;
 
+import com.fixkart.FixKart.dto.Otp.OtpLoginRequest;
 import com.fixkart.FixKart.dto.Profile.ProfileResponse;
 import com.fixkart.FixKart.dto.Profile.ProfileUpdateRequest;
 import com.fixkart.FixKart.dto.auth.LoginResponse;
+import com.fixkart.FixKart.dto.auth.ResetPasswordRequest;
 import com.fixkart.FixKart.dto.auth.SignupResponse;
 import com.fixkart.FixKart.entity.Address.Address;
 import com.fixkart.FixKart.entity.TechnicalCategory.TechnicalCategory;
@@ -16,10 +18,14 @@ import com.fixkart.FixKart.repository.*;
 import com.fixkart.FixKart.security.JwtUtil;
 import com.fixkart.FixKart.service.*;
 //import com.fixkart.FixKart.service.TokenBlacklistService;
+import com.fixkart.FixKart.service.Authtentication.AuthService;
+import com.fixkart.FixKart.service.Authtentication.OtpService;
+import com.fixkart.FixKart.service.TokenBlacklistService;
 import com.fixkart.FixKart.util.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,6 +65,11 @@ public class AuthServiceImpl implements AuthService {
 
     private final TokenBlacklistService blacklistService;
 //    private final PasswordUtil passwordUtil;
+    @Autowired
+    private OtpRepository otpRepository;
+
+    private OtpService otpService;
+
 
 
 
@@ -244,6 +255,50 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    @Override
+    public LoginResponse loginViaOtp(OtpLoginRequest otpLoginRequest) {
+        try{
+            String mobileNumber = otpLoginRequest.getMobileNumber();
+            String otp = otpLoginRequest.getOtp();
+            if(mobileNumber == null || otp == null) {
+                return new LoginResponse("Login Failed", false, null, null);
+            }
+            Users user = userRepository.findByMobileNumber(mobileNumber)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            String token = jwtUtil.generateToken(mobileNumber);
+
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("id", user.getId());
+            userData.put("mobileNumber", user.getMobileNumber());
+            userData.put("role", user.getRole().getName());
+            return new LoginResponse("Login successful", true, token, userData);
+        } catch (BadCredentialsException e) {
+            return new LoginResponse(null, false, "Invalid credentials", null);
+        } catch (Exception e) {
+            return new LoginResponse(null, false, "Login failed: " + e.getMessage(), null);
+        }
+    }
+
+    @Override
+    public String resetPassword(ResetPasswordRequest resetPasswordRequest) {
+        try{
+            String mobileNumber = resetPasswordRequest.getMobileNumber();
+            String otp = resetPasswordRequest.getOtp();
+            String newPassword = resetPasswordRequest.getNewPassword();
+
+            if (!otpService.verifyOtp(mobileNumber, otp)) {
+                return "Invalid OTP";
+            }
+            Users user = userRepository.findByMobileNumber(mobileNumber)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Password reset fails" + e.getMessage());
+        }
+        return "Password Reset Successfully";
+    }
 
 
 

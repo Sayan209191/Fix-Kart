@@ -260,6 +260,7 @@ header .shopping-cart .box .fa-trash:hover{
   color: #2874f0;
   font-weight: bold;
   text-decoration: none;
+  margin-top: -30px;
 }
 
 .header .icon {
@@ -269,6 +270,7 @@ header .shopping-cart .box .fa-trash:hover{
 /* ================= FOOTER ================= */
 .footer {
   background: #fff;
+  padding: 10px 15px 10px 15px;
 }
 .footer .box-container {
   display: grid;

@@ -6,12 +6,12 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 80vh;
+  height: 91vh;
 }
 
 /* Wrapper */
 .wrap {
-   display: flex; 
+   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
