@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './signin.html',
   styleUrls: ['./signin.css']
 })
@@ -18,7 +19,7 @@ export class SigninComponent {
 
     // get form values directly
     const form = event.target as HTMLFormElement;
-    const mobile = (form.querySelector('#email') as HTMLInputElement).value;
+    const mobile = (form.querySelector('#mobile') as HTMLInputElement).value;
     const password = (form.querySelector('#password') as HTMLInputElement).value;
 
     const body = {

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule], // ✅ Import CommonModule here
+  imports: [CommonModule, RouterLink], // ✅ Import CommonModule here
   templateUrl: './signup.html',
   styleUrls: ['./signup.css']
 })
@@ -14,10 +14,10 @@ export class SignupComponent {
   constructor(private http: HttpClient, private router: Router) {}
   showOtp = false;
 
-  sendCode() {
-    this.showOtp = true;
-    alert("Verification code sent to your email!");
-  }
+//   sendCode() {
+//     this.showOtp = true;
+//     alert("Verification code sent to your email!");
+//   }
 //   Request Body for signup
 //   {
 //     "mobileNumber" : "9475317316",
@@ -29,7 +29,7 @@ export class SignupComponent {
     event.preventDefault();
     // get form values directly
     const form = event.target as HTMLFormElement;
-    const mobile = (form.querySelector('#email') as HTMLInputElement).value;
+    const mobile = (form.querySelector('#mobile') as HTMLInputElement).value;
     const password = (form.querySelector('#password') as HTMLInputElement).value;
     const confirmPassword = (form.querySelector('#confirm-password') as HTMLInputElement).value;
     const roleId = 2;
@@ -43,12 +43,18 @@ export class SignupComponent {
     };
 
     // Send the signup request
-    this.http.post('/api/signup', requestBody).subscribe(response => {
-      console.log('Signup successful:', response);
-      this.router.navigate(['/login']);
-    }, error => {
-      console.error('Signup failed:', error);
+    this.http.post('http://localhost:8080/api/auth/signup', requestBody).subscribe({
+      next: (res: any) => {
+        console.log('Signup Success:', res);
+        alert('Signup successful!');
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Signup failed:', err);
+        alert('Signup failed!');
+      }
     });
+
   }
 
 }
