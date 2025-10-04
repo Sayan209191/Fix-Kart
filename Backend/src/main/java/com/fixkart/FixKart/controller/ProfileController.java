@@ -3,7 +3,7 @@ package com.fixkart.FixKart.controller;
 
 import com.fixkart.FixKart.dto.Profile.ProfileResponse;
 import com.fixkart.FixKart.dto.Profile.ProfileUpdateRequest;
-import com.fixkart.FixKart.service.AuthService;
+import com.fixkart.FixKart.service.Authtentication.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,11 +1,11 @@
+<section class="signin-page" >
 <div class="wrap">
-  <main class="card" role="main" aria-labelledby="title">
+  <div class="card" role="main" aria-labelledby="title">
     <div class="logo">
       <img src="assets/Fixkart.jpg" alt="Fixcart Logo">
     </div>
-    <h1 id="title">Log in to Fixcart</h1>
+    <!-- <h1 id="title">Log in to Fixcart</h1> -->
 
-    <!-- Social sign in -->
     <div class="btns">
       <button class="btn" type="button">
         <img src="assets/google logo.webp" alt="Google logo" class="icon">
@@ -15,11 +15,10 @@
 
     <div class="sep"><hr><span>or</span><hr></div>
 
-    <!-- Sign in form -->
     <form id="signin-form" (submit)="onSignin($event)" novalidate>
       <div class="field">
-        <label for="email">Email or mobile number</label>
-        <input id="email" name="email" type="text" placeholder="Email or mobile number" required />
+        <label for="mobile">Email or mobile number</label>
+        <input id="mobile" name="mobile" type="text" placeholder="Enter Your Mobile number" required />
       </div>
       <div class="field">
         <label for="password">Password</label>
@@ -31,7 +30,7 @@
           <input type="checkbox" name="remember" checked />
           <span>Remember me</span>
         </label>
-        <a href="#" class="muted">Forgot your password?</a>
+        <a routerLink="/" class="muted">Forgot your password?</a>
       </div>
 
       <div style="margin-top:16px">
@@ -39,9 +38,9 @@
       </div>
     </form>
 
-    <footer>
-      <div>Don't have an account? <a routerLink="/signup">Sign up for Fixcart</a></div>
-    </footer>
-  </main>
+    <div class="muted-text">
+      Don't have an account? <a routerLink="/signup">Sign up for Fixcart</a>
+    </div>
+  </div>
 </div>
-
+</section>

@@ -10,16 +10,13 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   private removeListeners: (() => void)[] = [];
-  isLoggedIn = false; // track login state
-  loginButtonText = 'Login ⌄';
-Account: any;
+    isLoggedIn = false; // track login state
+    loginButtonText = 'Login ⌄';
+    Account: any;
 
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
-  ) {}
+    constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {}
 
-  ngOnInit(): void {
+    ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       const searchForm = document.querySelector('.search-form') as HTMLElement;
       const shoppingCart = document.querySelector('.shopping-cart') as HTMLElement;
@@ -42,12 +39,12 @@ Account: any;
         navbar?.classList.remove('active');
       });
 
-      addClickListener('#cart-btn', () => {
-        shoppingCart?.classList.toggle('active');
-        searchForm?.classList.remove('active');
-        loginForm?.classList.remove('active');
-        navbar?.classList.remove('active');
-      });
+    //   addClickListener('#cart-btn', () => {
+    //     shoppingCart?.classList.toggle('active');
+    //     searchForm?.classList.remove('active');
+    //     loginForm?.classList.remove('active');
+    //     navbar?.classList.remove('active');
+    //   });
 
       addClickListener('#login-btn', () => {
         if (!this.isLoggedIn) {
@@ -77,7 +74,7 @@ Account: any;
       window.addEventListener('scroll', onScroll);
       this.removeListeners.push(() => window.removeEventListener('scroll', onScroll));
 
-      // ✅ Import Swiper dynamically
+
       import('swiper').then(({ default: Swiper }) => {
         import('swiper/modules').then(({ Autoplay, Navigation, Pagination }) => {
           new Swiper('.product-slider', {
