@@ -377,3 +377,8 @@ header .shopping-cart .box .fa-trash:hover{
   html { font-size: 50%; }
   .footer { text-align: center; }
 }
+
+.logout {
+  cursor: pointer;
+  text-decoration: none;
+}

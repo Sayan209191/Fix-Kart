@@ -1,6 +1,6 @@
-package com.fixkart.FixKart.serviceImpl;
+package com.fixkart.FixKart.serviceImpl.Authentication;
 
-import com.fixkart.FixKart.service.TokenBlacklistService;
+import com.fixkart.FixKart.service.Authtentication.TokenBlacklistService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;

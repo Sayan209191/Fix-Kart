@@ -20,7 +20,7 @@ import com.fixkart.FixKart.service.*;
 //import com.fixkart.FixKart.service.TokenBlacklistService;
 import com.fixkart.FixKart.service.Authtentication.AuthService;
 import com.fixkart.FixKart.service.Authtentication.OtpService;
-import com.fixkart.FixKart.service.TokenBlacklistService;
+import com.fixkart.FixKart.service.Authtentication.TokenBlacklistService;
 import com.fixkart.FixKart.util.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

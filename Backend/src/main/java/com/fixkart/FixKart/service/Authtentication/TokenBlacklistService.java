@@ -1,4 +1,4 @@
-package com.fixkart.FixKart.service;
+package com.fixkart.FixKart.service.Authtentication;
 
 public interface TokenBlacklistService {
     void blacklistToken(String token);

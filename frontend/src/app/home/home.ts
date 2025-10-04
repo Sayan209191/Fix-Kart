@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       window.addEventListener('scroll', onScroll);
       this.removeListeners.push(() => window.removeEventListener('scroll', onScroll));
 
-      // ✅ Import Swiper dynamically
+
       import('swiper').then(({ default: Swiper }) => {
         import('swiper/modules').then(({ Autoplay, Navigation, Pagination }) => {
           new Swiper('.product-slider', {

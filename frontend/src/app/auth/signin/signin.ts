@@ -38,6 +38,7 @@ export class SigninComponent {
 
         alert('Login successful!');
         this.router.navigateByUrl('/');
+
       },
       error: (err) => {
         console.error('Login failed:', err);

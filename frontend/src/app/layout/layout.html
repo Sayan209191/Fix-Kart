@@ -71,14 +71,14 @@
   <div class="dropdown">
   <button class="dropbtn" type="button">{{ loginButtonText }} ▼</button>
   <div class="dropdown-content">
-    <div class="dropdown-header">
+    <div class="dropdown-header" *ngIf="!isLoggedIn">
       New customer? <a routerLink="/signup">Sign Up</a>
     </div>
     <a *ngIf="!isLoggedIn" routerLink="/signin"><span class="icon">👤</span> Sign In</a>
     <a routerLink="/profile"><span class="icon">👤</span> My Profile</a>
     <a routerLink="/orders"><span class="icon">📦</span> My Orders</a>
     <a routerLink="/settings"><span class="icon">⚙️</span> Settings</a>
-    <a (click)="logout()"><span class="icon">🚪</span>Logout</a>
+    <a (click)="logout()" class="logout"><span class="icon">🚪</span>Logout</a>
   </div>
 </div>
 
