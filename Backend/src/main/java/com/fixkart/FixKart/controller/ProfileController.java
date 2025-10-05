@@ -28,8 +28,14 @@ public class ProfileController {
     }
     @GetMapping("/profile-me")
     public ResponseEntity<ProfileResponse> getProfile(@RequestHeader("Authorization") String authHeader) {
-        String token = authHeader.replace("Bearer ", "");
-        ProfileResponse response = authService.getProfile(token);
-        return ResponseEntity.ok(response);
+        try{
+            String token = authHeader.replace("Bearer ", "");
+            ProfileResponse response = authService.getProfile(token);
+            return ResponseEntity.ok(response);
+        }
+        catch (Exception ex) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
     }
 }
