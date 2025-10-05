@@ -215,6 +215,7 @@ public class AuthServiceImpl implements AuthService {
             if(profileUpdateRequest.getCity() != null) {address.setCity(profileUpdateRequest.getCity()); }
             if(profileUpdateRequest.getPincode() != null) { address.setPincode(profileUpdateRequest.getPincode());}
             if(profileUpdateRequest.getLandmark() != null) { address.setLandmark(profileUpdateRequest.getLandmark());}
+            if(profileUpdateRequest.getState() != null ) { address.setState(profileUpdateRequest.getState());}
 
             addressRepository.save(address);
             return "Profile Update Successfully";
