@@ -1,89 +1,126 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-interface Address {
-  addressLine1: string;
-  addressLine2: string;
-  pincode: string;
-  city: string;
-  state: string;
-  landmark: string;
-}
 
-interface UserData {
-  firstName: string;
-  lastName: string;
-  emailId: string;
-  mobileNumber: string;
-  address: Address;
-  avatarUrl: string;
+interface UserProfile {
+    userID: number | null;
+    firstName: string;
+    middleName?: string;
+    lastName: string;
+    email: string;
+    mobile: string;
+    altMobile?: string;
+    country: string;
+    address1: string;
+    address2: string;
+    state: string;
+    city: string;
+    zip: string;
+    landmark: string;
 }
 
 @Component({
   selector: 'app-profile',
-  standalone: true,
-  imports: [FormsModule],
   templateUrl: './profile.html',
-  styleUrls: ['./profile.css']
+  styleUrls: ['./profile.css'],
+  imports: [CommonModule, FormsModule],
 })
 export class ProfileComponent implements OnInit {
 
-  @ViewChild('avatarInput') avatarInputRef!: ElementRef<HTMLInputElement>;
-  @ViewChild('avatarImg') avatarImgRef!: ElementRef<HTMLImageElement>;
-
-  userData: UserData = {
+  user: UserProfile = {
+    userID: null,
     firstName: '',
+    middleName: '',
     lastName: '',
-    emailId: '',
-    mobileNumber: '',
-    avatarUrl: 'https://via.placeholder.com/100',
-    address: {
-      addressLine1: '',
-      addressLine2: '',
-      pincode: '',
-      city: '',
-      state: '',
-      landmark: ''
-    }
+    email: '',
+    mobile: '',
+    altMobile: '',
+    country: 'India',
+    address1: '',
+    address2: '',
+    state: '',
+    city: '',
+    zip: '',
+    landmark: ''
   };
 
+  isEditing = false;
+
+  constructor(private http: HttpClient) { }
+
   ngOnInit(): void {
-    this.loadUserData();
+    this.fetchProfile();
   }
 
-  // ---------- LOAD DATA ----------
-  loadUserData(): void {
-    // Simulated API call
-    console.log('User data ready for loading...');
+  toggleEdit(): void {
+    this.isEditing = !this.isEditing;
   }
 
-  // ---------- UPLOAD NEW AVATAR ----------
-  triggerAvatarUpload(): void {
-    this.avatarInputRef.nativeElement.click();
-  }
+  fetchProfile(): void {
+    if (typeof window !== 'undefined' && localStorage.getItem('token')) {
+      const token = localStorage.getItem('token')!;
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-  onAvatarChange(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.userData.avatarUrl = e.target?.result as string;
-        this.avatarImgRef.nativeElement.src = this.userData.avatarUrl;
+      this.http.get<UserProfile>('http://localhost:8080/api/profile/profile-me', { headers })
+        .subscribe({
+          next: (res: any) => {
+            this.user = {
+                userID: res.id || null,
+                firstName: res.customerDetails.firstName || '',
+                middleName: res.customerDetails.middleName || '',
+                lastName: res.customerDetails.lastName || '',
+                mobile: res.mobileNumber,
+                altMobile: res.customerDetails.alternativeMobileNumber || '',
+                email: res.customerDetails.emailId || '',
+                address1: res.customerDetails.address.addressLine1 || '',
+                address2: res.customerDetails.address.addressLine2 || '',
+                city: res.customerDetails.address.city|| '',
+                state: res.customerDetails.address.state|| '',
+                zip: res.customerDetails.address.pincode|| '',
+                landmark: res.customerDetails.address.landmark|| '',
+                country: 'India'
       };
-      reader.readAsDataURL(file);
+          },
+          error: err => console.error('Error fetching profile', err)
+        });
     }
   }
 
-  // ---------- DELETE AVATAR ----------
-  deleteAvatar(): void {
-    this.userData.avatarUrl = 'https://via.placeholder.com/100';
-    this.avatarImgRef.nativeElement.src = this.userData.avatarUrl;
-    this.avatarInputRef.nativeElement.value = '';
-  }
+  saveProfile(): void {
+    if (typeof window !== 'undefined' && localStorage.getItem('token')) {
+      const token = localStorage.getItem('token')!;
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-  // ---------- SAVE ----------
-  saveChanges(): void {
-    console.log('Saving user data:', this.userData);
-    alert('Profile updated successfully!');
+      const payload = {
+        userID: this.user.userID,
+        firstname: this.user.firstName,
+        middlename: this.user.middleName,
+        lastname: this.user.lastName,
+        alternativenumber: this.user.altMobile,
+        emailID: this.user.email,
+        addressLine1: this.user.address1,
+        addressLine2: this.user.address2,
+        pincode: this.user.zip,
+        city: this.user.city,
+        state: this.user.state,
+        landmark: this.user.landmark,
+        // category: null,
+        // subCategory: null,
+        // specialization: null
+    };
+
+      this.http.post('http://localhost:8080/api/profile/edit-profile', payload, { headers })
+        .subscribe({
+            next: (res: any) => {
+                // console.log('Profile updated successfully', res);
+                alert('Profile updated successfully!');
+                this.isEditing = false;   // hide Save/Cancel buttons
+                this.fetchProfile();       // refresh with updated data
+            },
+          error: err => console.error('Error saving profile', err)
+        });
+    }
   }
 }
