@@ -26,4 +26,6 @@ public class Users {
     private Role role;
     @Column(nullable = false)
     private LocalDateTime transDatetime = LocalDateTime.now();
+    @Column(nullable = true)
+    private String imagePath;
 }

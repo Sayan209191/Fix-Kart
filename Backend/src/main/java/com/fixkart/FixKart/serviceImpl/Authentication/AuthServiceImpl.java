@@ -227,7 +227,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ProfileResponse getProfile(String token) {
         try{
-            String mobileNumber = jwtUtil.extractUsername(token);
+            String mobileNumber = jwtUtil.extractMobileNumber(token);
 
             Users user = userRepository.findByMobileNumber(mobileNumber)
                     .orElseThrow(() -> new RuntimeException("User not found"));
