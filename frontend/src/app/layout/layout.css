@@ -101,7 +101,7 @@ body {
     margin-left: 5rem;
     background: #eee;
     cursor: pointer;
-    
+
 }
 .header .icons div:hover{
     background: var(--orange);
@@ -151,7 +151,7 @@ body {
     width: 35rem;
     border-radius: .5rem;
     box-shadow: var(--box-shadow);
-    padding:1rem;   
+    padding:1rem;
 }
 .header .shopping-cart.active{
     right: 2rem;
@@ -219,7 +219,7 @@ header .shopping-cart .box .fa-trash:hover{
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  
+
 }
 
 .header .dropdown-content {
@@ -389,7 +389,7 @@ header .shopping-cart .box .fa-trash:hover{
   display: inline-block;
   cursor: pointer;
   padding-left: 2px;
-  
+
 }
 
 .notification-wrapper label {
@@ -439,7 +439,11 @@ header .shopping-cart .box .fa-trash:hover{
 .notification-dropdown li {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
-  font-size: 0.9rem;
+  font-size: 1rem;
+}
+.notification-dropdown p{
+    font-size: 1.2rem;
+    /* margin-bottom: 10px; */
 }
 
 .notification-dropdown li:last-child {
@@ -449,7 +453,7 @@ header .shopping-cart .box .fa-trash:hover{
 .notification-dropdown .no-notify {
   text-align: center;
   color: #999;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   display: none;
 }
 
