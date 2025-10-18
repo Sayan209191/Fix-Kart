@@ -44,13 +44,26 @@ public class ProfileController {
 
     }
     @PostMapping("/upload-image")
-    public ResponseEntity<String> uploadImage(@RequestHeader("Authorization") String authHeader, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadImage(@RequestHeader("Authorization") String authHeader, @RequestParam("image") MultipartFile file) {
         try {
-            profileService.uploadImage(file, authHeader);
+            profileService.uploadProfilePhoto(file, authHeader);
             return ResponseEntity.ok("Image uploaded successfully!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error: " + e.getMessage());
         }
+    }
+    @DeleteMapping("/delete-image")
+    public ResponseEntity<?> deleteImage(@RequestHeader("Authorization") String authHeader) {
+        try{
+            // verify token → find user
+            profileService.deleteProfilePhoto(authHeader);
+            // delete file from storage and clear imagePath
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
+
+        return ResponseEntity.ok("Deleted");
     }
 }

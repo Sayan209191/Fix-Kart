@@ -11,6 +11,15 @@
 
   <main class="main-content">
     <div class="profile-section">
+        <div class="avatar-container">
+            <img [src]="avatarPreview" alt="Avatar" />
+            <input type="file" #avatarUpload accept="image/*" hidden (change)="onFileSelected($event)" />
+            <button id="uploadBtn" (click)="triggerFileInput()">Upload New</button>
+            <button id="deleteBtn" class="delete" (click)="deleteAvatar()">Delete Avatar</button>
+        </div>
+
+
+
       <form (ngSubmit)="saveProfile()" #profileForm="ngForm">
         <div class="form-row">
           <div class="form-group">
@@ -50,14 +59,7 @@
           </div>
         </div>
 
-        <div class="form-group full">
-          <label>Residential Address line 1</label>
-          <input type="text" placeholder="Address line 1" [(ngModel)]="user.address1" name="address1" [disabled]="!isEditing" />
-        </div>
-        <div class="form-group full">
-          <label>Residential Address line 2</label>
-          <input type="text" placeholder="Address line 2" [(ngModel)]="user.address2" name="address2" [disabled]="!isEditing" />
-        </div>
+
 
         <div class="form-row">
           <div class="form-group">
@@ -69,13 +71,24 @@
             <input type="text" [(ngModel)]="user.city" name="city" [disabled]="!isEditing" />
           </div>
           <div class="form-group">
-            <label>Zip Code</label>
+            <label>Pin Code</label>
             <input type="text" [(ngModel)]="user.zip" name="zip" [disabled]="!isEditing" />
           </div>
-          <div class="form-group">
-            <label>Landmark</label>
-            <input type="text" [(ngModel)]="user.landmark" name="landmark" [disabled]="!isEditing" />
-          </div>
+
+        </div>
+        <div class="form-group full">
+          <label>Residential Address line 1</label>
+          <input type="text" placeholder="Address line 1" [(ngModel)]="user.address1" name="address1" [disabled]="!isEditing" />
+        </div>
+        <div class="form-group full">
+          <label>Residential Address line 2</label>
+          <input type="text" placeholder="Address line 2" [(ngModel)]="user.address2" name="address2" [disabled]="!isEditing" />
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Landmark</label>
+                <input type="text" [(ngModel)]="user.landmark" name="landmark" [disabled]="!isEditing" />
+            </div>
         </div>
 
         <!-- Buttons -->

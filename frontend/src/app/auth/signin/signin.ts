@@ -23,27 +23,27 @@ export class SigninComponent {
     const password = (form.querySelector('#password') as HTMLInputElement).value;
 
     const body = {
-      mobileNumber: mobile,
-      password: password
+        mobileNumber: mobile,
+        password: password
     };
 
-    this.http.post('http://localhost:8080/api/auth/signin', body).subscribe({
-      next: (res: any) => {
-        console.log('Login Success:', res);
+    this.http.post('http://localhost:8080/api/auth/signin', body, { responseType: 'text' }).subscribe({
+        next: (res: any) => {
+            console.log('Login Success:', res);
 
-        //  backend returns JWT token
-        if (res.token) {
-          localStorage.setItem('token', res.token);
+            //  backend returns JWT token
+            if (res.token) {
+                localStorage.setItem('token', res.token);
+            }
+
+            alert('Login successful!');
+            this.router.navigateByUrl('/');
+
+        },
+        error: (err) => {
+            console.error('Login failed:', err);
+            alert('Login failed! Check console for details.');
         }
-
-        alert('Login successful!');
-        this.router.navigateByUrl('/');
-
-      },
-      error: (err) => {
-        console.error('Login failed:', err);
-        alert('Login failed! Check console for details.');
-      }
     });
   }
 }

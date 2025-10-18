@@ -21,7 +21,34 @@ public class ProfileServiceImpl implements ProfileService {
     private FileUploadService fileUploadService;
 
     @Override
-    public String uploadImage(MultipartFile file, String authHeader){
+    public String uploadProfilePhoto(MultipartFile file, String authHeader){
+        try{
+            if (file.isEmpty()) throw new IllegalArgumentException("File is empty");
+            String token = authHeader.replace("Bearer ", "").trim();
+
+            // Extract username from JWT
+            String mobileNumber = jwtUtil.extractMobileNumber(token);
+
+            // Find user by Mobile Number
+            Users user = userRepository.findByMobileNumber(mobileNumber)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            // Delete Previous Photo
+            if(user.getImagePath() != null) {
+                fileUploadService.deleteFile(user.getImagePath());
+            }
+            // Save file locally
+            String fileName = fileUploadService.saveFile(file, user.getId());
+
+           // Update user’s image path in DB
+            user.setImagePath("/uploads/" + fileName);
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return "Profile Photo Upload Successfully";
+    }
+    @Override
+    public String deleteProfilePhoto(String authHeader) {
         try{
             String token = authHeader.replace("Bearer ", "").trim();
 
@@ -31,16 +58,20 @@ public class ProfileServiceImpl implements ProfileService {
             // Find user by Mobile Number
             Users user = userRepository.findByMobileNumber(mobileNumber)
                     .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//            // Save file locally
-            String fileName = fileUploadService.saveFile(file);
-//
-//            // Update user’s image path in DB
-            user.setImagePath("/uploads/" + fileName);
-            userRepository.save(user);
+            if (user.getImagePath() != null) {
+                String imagePath = user.getImagePath().replace("/uploads/", "");
+                fileUploadService.deleteFile(imagePath);
+                user.setImagePath(null);
+                userRepository.save(user);
+            }
+            else {
+                return "No Profile Picture Uploaded Previously";
+            }
+
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "";
+        return "Profile Photo deleted Successfully";
     }
 }
