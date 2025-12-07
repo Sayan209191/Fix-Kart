@@ -60,8 +60,7 @@ public class ProfileController {
             profileService.deleteProfilePhoto(authHeader);
             // delete file from storage and clear imagePath
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
 
         return ResponseEntity.ok("Deleted");

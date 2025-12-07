@@ -133,7 +133,7 @@ export class ProfileComponent implements OnInit {
                     state: this.user.state,
                     landmark: this.user.landmark,
                 };
-                this.http.post('http://localhost:8080/api/profile/edit-profile', payload, { headers })
+                this.http.post('http://localhost:8080/api/profile/edit-profile', payload, { headers , responseType: 'text'})
                     .subscribe({
                     next: () => {
                     alert('Profile updated successfully!');
@@ -185,7 +185,7 @@ export class ProfileComponent implements OnInit {
 
                 const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
-                this.http.post(`http://localhost:8080/api/profile/upload-image`, formData, { headers })
+                this.http.post(`http://localhost:8080/api/profile/upload-image`, formData, { headers, responseType: 'text' })
                 .subscribe({
                     next: () => {
                         alert('Profile picture uploaded successfully!');
@@ -214,8 +214,8 @@ export class ProfileComponent implements OnInit {
                 .subscribe({
                     next: () => {
                         alert('Profile picture deleted successfully!');
-                        // this.avatarPreview = 'https://via.placeholder.com/100';
-                        // this.user.imagePath = '';
+                        this.avatarPreview = 'https://via.placeholder.com/100';
+                        this.user.imagePath = '';
                         this.fetchProfile();
                     },
                     error: (err) => console.error('Error deleting avatar', err),

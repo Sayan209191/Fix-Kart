@@ -27,9 +27,9 @@ export class SigninComponent {
         password: password
     };
 
-    this.http.post('http://localhost:8080/api/auth/signin', body, { responseType: 'text' }).subscribe({
+    this.http.post('http://localhost:8080/api/auth/signin', body ).subscribe({
         next: (res: any) => {
-            console.log('Login Success:', res);
+            console.log('Login Success');
 
             //  backend returns JWT token
             if (res.token) {
@@ -37,7 +37,9 @@ export class SigninComponent {
             }
 
             alert('Login successful!');
-            this.router.navigateByUrl('/');
+            setTimeout(() => {
+                this.router.navigateByUrl('/');
+            }, 100);
 
         },
         error: (err) => {
