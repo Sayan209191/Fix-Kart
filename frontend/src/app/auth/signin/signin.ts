@@ -29,6 +29,10 @@ export class SigninComponent {
 
     this.http.post('http://localhost:8080/api/auth/signin', body ).subscribe({
         next: (res: any) => {
+            if(res.Success === false) {
+                alert('Login failed! ' + (res.Message || ''));
+                return;
+            }
             console.log('Login Success');
 
             //  backend returns JWT token
