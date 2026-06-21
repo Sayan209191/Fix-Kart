@@ -215,6 +215,7 @@ public class AuthServiceImpl implements AuthService {
             if(profileUpdateRequest.getCity() != null) {address.setCity(profileUpdateRequest.getCity()); }
             if(profileUpdateRequest.getPincode() != null) { address.setPincode(profileUpdateRequest.getPincode());}
             if(profileUpdateRequest.getLandmark() != null) { address.setLandmark(profileUpdateRequest.getLandmark());}
+            if(profileUpdateRequest.getState() != null ) { address.setState(profileUpdateRequest.getState());}
 
             addressRepository.save(address);
             return "Profile Update Successfully";
@@ -226,7 +227,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ProfileResponse getProfile(String token) {
         try{
-            String mobileNumber = jwtUtil.extractUsername(token);
+            String mobileNumber = jwtUtil.extractMobileNumber(token);
 
             Users user = userRepository.findByMobileNumber(mobileNumber)
                     .orElseThrow(() -> new RuntimeException("User not found"));

@@ -31,10 +31,30 @@
     <div class="fas fa-shopping-cart" id="cart-btn"></div>
   </div>
 
-  <form class="search-form">
-    <input type="search" id="search-box" placeholder="search here..." />
-    <label for="search-box" class="fas fa-search"></label>
-  </form>
+  <!-- Search Form -->
+<form class="search-form">
+  <input type="search" id="search-box" placeholder="search here..." />
+  <label for="search-box" class="fas fa-search"></label>
+</form>
+
+<!-- Notification Bell -->
+<div class="notification-wrapper">
+  <input type="checkbox" id="notify-toggle" hidden />
+  <label for="notify-toggle" class="fas fa-bell"></label>
+  <span class="notification-count">3</span>
+
+  <!-- Dropdown panel -->
+  <div class="notification-dropdown">
+    <p><strong>Notifications</strong></p>
+    <ul>
+      <li>🛒 New Services request #1234 has been created</li>
+      <li>💬 New message from support</li>
+      <li>⭐ You received a 5-star review</li>
+    </ul>
+    <p class="no-notify">No new notifications</p>
+  </div>
+</div>
+
 
   <!-- <div class="shopping-cart">
     <div class="box">
@@ -67,6 +87,7 @@
     <div class="total">total : 25000/-</div>
     <a href="#" class="btn">checkout</a>
   </div> -->
+  <div></div>
 
   <div class="dropdown">
   <button class="dropbtn" type="button">{{ loginButtonText }} ▼</button>
@@ -81,6 +102,7 @@
     <a (click)="logout()" class="logout"><span class="icon">🚪</span>Logout</a>
   </div>
 </div>
+
 
 </header>
 <!-- ============== END HEADER ============== -->
